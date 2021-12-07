@@ -41,7 +41,7 @@ public class Game implements java.awt.event.ActionListener{
 	       frame.setLayout(null);
 	      
 	       playerinfo = new JLabel(new ImageIcon(
-	         		"wood2.jpg"));
+	         		"WoodBackgroung.png"));
 	       playerinfo.setBounds(0, 0, 860, 860);
 	       playerinfo.setLayout(null);
 	       
