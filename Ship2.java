@@ -11,7 +11,6 @@ public class Ship2 {
 	
 	
 	private int ShipNumber;
-    private int capacity;
     private int tolerance;
     private int x;
     private int y;
@@ -25,6 +24,7 @@ public class Ship2 {
         this.y = y;
         this.size = size;
         this.direction = direction;
+        this.tolerance = size;
         this.ShipNumber = Shipcounter + 1;
         
         this.xy[0][0] = x - 1;
@@ -51,12 +51,29 @@ public class Ship2 {
     	
     }
 
+    public void updateTolerance(Deck deck) {
+    	this.tolerance = 0;
+    	
+    	for (int i = 0; i < this.size; i++) {
+    			
+    			if (deck.deck_arr[this.xy[i][0]][this.xy[i][1]] == "S" ) {
+    				tolerance++;
+    				
+    			} else if (deck.deck_arr[this.xy[i][0]][this.xy[i][1]] == "A") {
+    				
+    				tolerance += 2;
+    			}
+    		
+        }
+    }
+    
     public boolean isDestroyed1() {
     	boolean result = true;
     	
     	for (int i = 0; i < this.size; i++) {
     		
-    		if (MenuInterface.Deck1.deck_arr[xy[i][0]][xy[i][1]] == "S") {
+    		if (MenuInterface.Deck1.deck_arr[xy[i][0]][xy[i][1]].equals("S") || 
+    				MenuInterface.Deck1.deck_arr[xy[i][0]][xy[i][1]].equals("A")) {
     			
     			result = false;
     		}
@@ -71,17 +88,14 @@ public class Ship2 {
         
 	    for (int i = 0; i < this.size; i++) {
 	       
-	    	if (MenuInterface.Deck2.deck_arr[xy[i][0]][xy[i][1]] == "S") {
+	    	if (MenuInterface.Deck2.deck_arr[xy[i][0]][xy[i][1]].equals("S") || 
+	    			MenuInterface.Deck2.deck_arr[xy[i][0]][xy[i][1]].equals("A")) {
               
 	        	result = false;
             }
         }
         
 	    return result;
-    }
-    
-    public int getCapacity() {
-        return capacity;
     }
     
     public int getX() {
@@ -108,10 +122,6 @@ public class Ship2 {
         return direction;
     }
     
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
     public int getTolerance() {
         return tolerance;
     }

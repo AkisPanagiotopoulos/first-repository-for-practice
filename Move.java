@@ -3,26 +3,46 @@ import java.util.List;
 
 public class Move {
 	
-	//Deck Ship2.shipsList = new Deck();
-	
 	int i;
 	int x;
 	int y;
 	int size;
 	String direction; 
 	
-	public void moveRight(int i) {
-		i = i - 1;
-		x = Ship2.shipsList.get(i).getX();
-		y = Ship2.shipsList.get(i).getY();
-		size = Ship2.shipsList.get(i).getSize();
-		direction = Ship2.shipsList.get(i).getDirection();
+	public void moveRight(int i, Deck deck) {
+		i = i-1;
+		Ship2 ship = Ship2.shipsList.get(i) ;
+		x = ship.xy[0][0];
+		y = ship.xy[0][1];
+		size = ship.getSize();
+		direction = ship.getDirection();
 		
 		if (direction.equals("RIGHT") ) {
 			if (y + size - 1 <= 9) {
-				MenuInterface.Deck1.deck_arr[x][y] = "O";
-				MenuInterface.Deck1.deck_arr[x][y+size] = "S";
-				Ship2.shipsList.get(i).setY(y+1);
+				int[][] array = new int[4][2];
+				   Deck mydeck = new Deck();
+				   
+				   for (int j = 0; j < size; j++) {	
+					    array[j][0] = ship.xy[j][0];
+					    array[j][1] = ship.xy[j][1];
+						
+				   }
+				   
+				   for (int j = 0; j < size; j++) {
+					   mydeck.deck_arr[array[j][0]][array[j][1]] = deck.deck_arr[array[j][0]][array[j][1]]; 
+				   }
+					
+				   
+				   for (int j = 0; j < size; j++) {
+						deck.deck_arr[ship.xy[j][0]][ship.xy[j][1] + 1] = 
+								mydeck.deck_arr[array[j][0]][array[j][1]];
+					
+					}
+				   deck.deck_arr[ship.xy[0][0]][ship.xy[0][1]] = "O";
+					
+					for (int j = 0; j < size; j++) {
+						ship.xy[j][1] += 1;
+					}
 			} else {
 				System.out.println("Δεν επιτρέπεται!");
 			}
@@ -30,18 +50,41 @@ public class Move {
 		}
 	}
 	
-	public void moveLeft(int i) {
-		i = i - 1;
-		x = Ship2.shipsList.get(i).getX();
-		y = Ship2.shipsList.get(i).getY();
-		size = Ship2.shipsList.get(i).getSize();
-		direction = Ship2.shipsList.get(i).getDirection();
+	public void moveLeft(int i, Deck deck) {
+		i = i-1;
+		Ship2 ship = Ship2.shipsList.get(i) ;
+		x = ship.xy[0][0];
+		y = ship.xy[0][1];
+		size = ship.getSize();
+		direction = ship.getDirection();
+		
 		
 		if (direction.equals("RIGHT") ) {
-			if (y > 1) {
-				MenuInterface.Deck1.deck_arr[x][y+size-1] = "O";
-				MenuInterface.Deck1.deck_arr[x][y-1] = "S";
-				Ship2.shipsList.get(i).setY(y-1);
+			if (y > 0) {
+				int[][] array = new int[4][2];
+				   Deck mydeck = new Deck();
+				   
+				   for (int j = 0; j < size; j++) {	
+					    array[j][0] = ship.xy[j][0];
+					    array[j][1] = ship.xy[j][1];
+						
+				   }
+				   
+				   for (int j = 0; j < size; j++) {
+					   mydeck.deck_arr[array[j][0]][array[j][1]] = deck.deck_arr[array[j][0]][array[j][1]]; 
+				   }
+					
+				   
+				   for (int j = 0; j < size; j++) {
+						deck.deck_arr[ship.xy[j][0]][ship.xy[j][1] - 1] = 
+								mydeck.deck_arr[array[j][0]][array[j][1]];
+					
+					}
+					deck.deck_arr[ship.xy[0][0]][ship.xy[size - 1][1]] = "O";
+					
+					for (int j = 0; j < size; j++) {
+						ship.xy[j][1] -= 1;
+					}
 			} else {
 				System.out.println("Δεν επιτρέπεται!");
 			}
@@ -49,18 +92,41 @@ public class Move {
 		}
 	}
 	
-	public void moveUp(int i) {
+	public void moveUp(int i, Deck deck) {
 		i = i-1;
-		x = Ship2.shipsList.get(i).getX();
-		y = Ship2.shipsList.get(i).getY();
-		size = Ship2.shipsList.get(i).getSize();
-		direction = Ship2.shipsList.get(i).getDirection();
+		Ship2 ship = Ship2.shipsList.get(i) ;
+		x = ship.xy[0][0];
+		y = ship.xy[0][1];
+		size = ship.getSize();
+		direction = ship.getDirection();
 		
 		if (direction.equals("DOWN") ) {
-			if (x > 1) {
-				MenuInterface.Deck1.deck_arr[x+size-1][y] = "O";
-				MenuInterface.Deck1.deck_arr[x-1][y] = "S";
-				Ship2.shipsList.get(i).setX(x-1);
+			if (x > 0) {
+				
+				int[][] array = new int[4][2];
+				   Deck mydeck = new Deck();
+				   
+				   for (int j = 0; j < size; j++) {	
+					    array[j][0] = ship.xy[j][0];
+					    array[j][1] = ship.xy[j][1];
+						
+				   }
+				   
+				   for (int j = 0; j < size; j++) {
+					   mydeck.deck_arr[array[j][0]][array[j][1]] = deck.deck_arr[array[j][0]][array[j][1]]; 
+				   }
+					
+				   
+				   for (int j = 0; j < size; j++) {
+						deck.deck_arr[ship.xy[j][0] - 1][ship.xy[j][1]] = 
+								mydeck.deck_arr[array[j][0]][array[j][1]];
+					
+					}
+					deck.deck_arr[ship.xy[size - 1][0]][ship.xy[0][1]] = "O";
+					
+					for (int j = 0; j < size; j++) {
+						ship.xy[j][0] -= 1;
+					}
 			} else {
 				System.out.println("Δεν επιτρέπεται!");
 			}
@@ -68,18 +134,42 @@ public class Move {
 		}
 	}
 	
-	public void moveDown(int i) {
+	public void moveDown(int i, Deck deck) {
 		i = i-1;
-		x = Ship2.shipsList.get(i).getX();
-		y = Ship2.shipsList.get(i).getY();
-		size = Ship2.shipsList.get(i).getSize();
-		direction = Ship2.shipsList.get(i).getDirection();
+		Ship2 ship = Ship2.shipsList.get(i) ;
+		x = ship.xy[0][0];
+		y = ship.xy[0][1];
+		size = ship.getSize();
+		direction = ship.getDirection();
 		
 		if (direction.equals("DOWN") ) {
 			if (x + size - 1 <= 9) {
-				MenuInterface.Deck1.deck_arr[x][y] = "O";
-				MenuInterface.Deck1.deck_arr[x+size][y] = "S";
-				Ship2.shipsList.get(i).setX(x+1);
+				
+			   int[][] array = new int[4][2];
+			   Deck mydeck = new Deck();
+			   
+			   for (int j = 0; j < size; j++) {	
+				    array[j][0] = ship.xy[j][0];
+				    array[j][1] = ship.xy[j][1];
+					
+			   }
+			   
+			   for (int j = 0; j < size; j++) {
+				   mydeck.deck_arr[array[j][0]][array[j][1]] = deck.deck_arr[array[j][0]][array[j][1]]; 
+			   }
+				
+			   
+			   for (int j = 0; j < size; j++) {
+					deck.deck_arr[ship.xy[j][0] + 1][ship.xy[j][1]] = 
+							mydeck.deck_arr[array[j][0]][array[j][1]];
+				
+				}
+				deck.deck_arr[ship.xy[0][0]][ship.xy[0][1]] = "O";
+				
+				for (int j = 0; j < size; j++) {
+					ship.xy[j][0] += 1;
+				}
+				
 			} else {
 				System.out.println("Δεν επιτρέπεται!");
 			}

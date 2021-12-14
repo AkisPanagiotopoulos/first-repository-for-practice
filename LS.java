@@ -17,16 +17,33 @@ public class LS extends JFrame {
 	private JPanel contentPane;
 	private static JProgressBar progressBar;
 	private JTable table;
+	private static JLabel label;
 	private static JLabel label_1;
 	
 	public  void play() {
 		LS frame = new LS();
 		frame.setVisible(true);
 		try {
-			for(int x=0;x<102;x++) {
+			for(int x=2;x<102;x++) {
 				LS.progressBar.setValue(x);
-				Thread.sleep(150);
+				Thread.sleep(180);
 				LS.label_1.setText(Integer.toString(x)+" %");
+				if (x==0) {
+					LS.label.setText("Loading game..");
+				} else if (x==13) {
+					LS.label.setText("Gamieste.....");
+				}else if (x == 27) {
+					LS.label.setText("Loading game...");
+				}else if (x == 40) {
+					LS.label.setText("Gamieste..");
+				}else if (x == 54) {
+					LS.label.setText("Loading game......");
+				}else if (x == 69) {
+					LS.label.setText("Gamieste...");
+				}else if (x == 86) {
+					LS.label.setText("Loading game..");
+				}
+				
 				if(x==101) {
 					frame.dispose();
 				}
@@ -45,6 +62,12 @@ public class LS extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		label = new JLabel("");
+		label.setForeground(Color.WHITE);
+		label.setFont(new Font("Forte", Font.PLAIN, 27));
+		label.setBounds(12, 683, 209, 37);
+		contentPane.add(label);
+
 		label_1 = new JLabel("");
 		label_1.setForeground(Color.WHITE);
 		label_1.setFont(new Font("Arial Black", Font.BOLD, 18));

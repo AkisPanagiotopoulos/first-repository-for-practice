@@ -5,6 +5,9 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -21,6 +24,7 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
 	private int counter = 1;
 	private int size_counter = 2;
 	
+	private String direction;
 	private String[][] deck_table = new String[10][10];
 	
 	static Deck Deck1 = new Deck();
@@ -42,10 +46,14 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
 	private JButton poseidon;
 	private JButton ares;
 	private JButton artemis;
+	private JButton dirDown;
+	private JButton dirRight;
 	
-	private JTextField t1, t2, t3, t4, t5, t6, t7;
+	private JTextField t1, t2, t4, t5, t6, t7;
 	
 	private JTable jt;
+	
+    static File click = new File("click.wav");
 	
 	static Player player1;
 	static Player player2;
@@ -63,11 +71,12 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
         		"stracheship.jpg"));
         add(background);
         
-    	f.setSize(1280, 733);
+       
+        f.setSize(1280, 733);
     	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setResizable(false);
     	
-        b1 = new JButton("1. Έναρξη του παιχνιδιού");
+        b1 = new JButton("1. Έναρξη του Παιχνιδιού");
     	b1.setBounds(420, 270, 400, 80);
     	b1.addActionListener(this);
     	
@@ -80,7 +89,8 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
         b3.setBounds(420, 550, 400, 80);
         b3.addActionListener(this);
     	
-    	background.setLayout(null);
+        
+        background.setLayout(null);
         background.add(b1);
     	background.add(b2);
     	background.add(b3);
@@ -167,8 +177,34 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
     	startframe.setVisible(false);
     	GodFrame.setVisible(true);
     	
-    	JLabel background = new JLabel(new ImageIcon(
-         		"gods2.jpg"));
+    	JLabel background;
+    	
+    	if (player1.getGod().equals("ΔΙΑΣ")) {
+    		
+    		 background = new JLabel(new ImageIcon(
+             		"Διαφάνεια3.jpg"));
+    		
+    	} else if (player1.getGod().equals("ΑΡΤΕΜΙΣ")) {
+        		
+        	 background = new JLabel(new ImageIcon(
+                 		"Διαφάνεια4.jpg"));
+        		
+        } else if (player1.getGod().equals("ΑΡΗΣ")) {
+    		
+    		 background = new JLabel(new ImageIcon(
+             		"Διαφάνεια5.jpg"));
+    		
+    	} else if (player1.getGod().equals("ΠΟΣΕΙΔΩΝΑΣ")) {
+    		
+    		 background = new JLabel(new ImageIcon(
+             		"Διαφάνεια6.jpg"));
+    		
+    	} else {
+    		
+    		 background = new JLabel(new ImageIcon(
+             		"gods2.jpg"));
+    	}
+    	
     	
     	background.setLayout(null);
     	GodFrame.add(background);
@@ -188,7 +224,33 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
         artemis = new JButton("ΑΡΤΕΜΙΣ");
         artemis.setBounds(365, 600, 200, 40);
         artemis.addActionListener(this);
-    
+        
+
+    	if (player1.getGod().equals("ΔΙΑΣ")) {
+    		
+    		zeus.setVisible(false);
+    		
+    	} else if (player1.getGod().equals("ΑΡΤΕΜΙΣ")) {
+        		
+        	 artemis.setVisible(false);
+        
+    	} else if (player1.getGod().equals("ΑΡΗΣ")) {
+    		
+    		ares.setVisible(false);
+    		
+    	} else if (player1.getGod().equals("ΠΟΣΕΙΔΩΝΑΣ")) {
+    		
+    		poseidon.setVisible(false);
+    		 
+    	} else {
+    		
+    		 zeus.setVisible(true);
+    		 artemis.setVisible(true);
+    		 ares.setVisible(true);
+    		 poseidon.setVisible(true);
+    	}
+        
+        
         background.add(zeus);
         background.add(poseidon);
         background.add(ares);
@@ -199,15 +261,18 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
     @Override
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource() == b1 ) {
+        	Bsound.Sound(click);
         	
         	Player();
         	
         } else if (e.getSource() == b2) {
-    		
+        	Bsound.Sound(click);
+        	
+        	
     	    newFrame = new JFrame("Παρουσίαση - Οδηγίες του Stracheship");
     		
     	    JLabel newPane = new JLabel(new ImageIcon(
-            		"sea.jpg"));
+            		"seastorm2.jpg"));
     		newPane.setLayout(null);
     	    
     		back = new JButton("Αρχικό Μενού");
@@ -226,7 +291,8 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
     		
     		
     		JTextArea textArea = new JTextArea(2, 20);
-    	    textArea.setText("Παιχνίδι ναυμαχία-Σκάκι \r\n" + 
+    		textArea.setForeground(Color.WHITE);
+    		textArea.setText("Παιχνίδι ναυμαχία-Σκάκι \r\n" + 
     				"\r\n" + 
     				"Περίληψη\r\n" + 
     				"Στο παιχνίδι αυτό οι παίκτες ανταγωνίζονται μεταξύ τους στην θάλασσα για την αντιμετώπιση και καταστροφή των αντίπαλων στρατευμάτων για την νίκη της ναυμαχίας.\r\n" + 
@@ -338,23 +404,27 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
     	   
     	    
     	 } else if (e.getSource() == b3) {
-    		
+    		 Bsound.Sound(click);
+    		 
     		 System.exit(0);
     	 
     	 } else if (e.getSource() == back) {
+    		 Bsound.Sound(click);
     		 
     		 newFrame.setVisible(false);
     		 f.setVisible(true);
     	 
     	 
     	 } else if (e.getSource() == submit) {
+    		     Bsound.Sound(click);
+    		 
     		     String answer1 = t1.getText();
     	         String answer2 = t2.getText();
-    	         String answer4 = t4.getText();
+    	         
     	     
     	         int x = Integer.parseInt(answer1);
     	         int y = Integer.parseInt(answer2);
-    	         String direction = answer4;
+    	         
     	         
     	         if (Player.playerNo == 1) {
     	        	  
@@ -373,8 +443,18 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
          	         Gods();
     	         }
         
-    	 
+    	 } else if (e.getSource() == dirDown) {
+    		 
+    		 direction = "DOWN";
+      
+    	 } else if (e.getSource() == dirRight) {
+    		 
+    		 direction = "RIGHT";
+    		 
+    		 
     	 } else if (e.getSource() == next) {
+    		 Bsound.Sound(click);
+    		 
     		 String answer5 = t5.getText();
 	         String answer6 = t6.getText();
 	         String answer7 = t7.getText();
@@ -399,7 +479,9 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
     	 } else if (e.getSource() == zeus || e.getSource() == poseidon ||
         		e.getSource() == ares || e.getSource() == artemis) {
         	
-    		if (Player.playerNo == 1) {
+    		 Bsound.Sound(click);
+    		 
+    		 if (Player.playerNo == 1) {
     			if (e.getSource() == zeus) {
     				
     				player1.setGod("ΔΙΑΣ"); 
@@ -467,7 +549,9 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
         JLabel lb = new JLabel("Δώστε x, y, μέγεθος, και κατεύθυνση για το πλοίο");
         lb.setBounds(50, 50, 280, 30);
         lb.setOpaque(true);
-       
+        lb.setBackground(Color.GRAY);
+        lb.setForeground(Color.BLACK);
+        
         if (Player.playerNo == 2 && ShipPlacementCounter == 5) {
  		   counter = 1;
  		   size_counter = 2;
@@ -480,6 +564,8 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
         JLabel ShipCount = new JLabel(message); 
         ShipCount.setBounds(300, 600, 170, 30);
         ShipCount.setOpaque(true);
+        ShipCount.setBackground(Color.GRAY);
+        ShipCount.setForeground(Color.BLACK);
         
         submit = new JButton("Καταχώρηση");
         submit.addActionListener(this);  
@@ -488,6 +574,8 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
         JLabel lbt1 = new JLabel("Συντεταγμένη Χ");
         lbt1.setBounds(50, 100, 100, 30);
         lbt1.setOpaque(true);
+        lbt1.setBackground(Color.GRAY);
+        lbt1.setForeground(Color.BLACK);
         
         t1 = new JTextField();  
         t1.setBounds(50,140, 200,30);  
@@ -496,6 +584,8 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
         JLabel lbt2 = new JLabel("Συντεταγμένη Υ");
         lbt2.setBounds(50, 180, 100, 30);
         lbt2.setOpaque(true);
+        lbt2.setBackground(Color.GRAY);
+        lbt2.setForeground(Color.BLACK);
         
         t2 = new JTextField();  
         t2.setBounds(50, 220, 200, 30);
@@ -504,10 +594,17 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
         JLabel lbt4 = new JLabel("Κατεύθυνση Πλοίου");
         lbt4.setBounds(50, 260, 120, 30);
         lbt4.setOpaque(true);
+        lbt4.setBackground(Color.GRAY);
+        lbt4.setForeground(Color.BLACK);
         
-        t4 = new JTextField();  
-        t4.setBounds(50, 300, 200,30);  
-        t4.addActionListener(this);
+        dirDown = new JButton("ΚΑΘΕΤΑ");
+        dirRight = new JButton("ΟΡΙΖΟΝΤΙΑ");
+        
+        dirDown.setBounds(50, 325, 100, 30);
+        dirRight.setBounds(155, 325, 100, 30);
+        
+        dirDown.addActionListener(this);
+        dirRight.addActionListener(this);
         
         String[][] deck_array = new String[10][10];
         String[] column = new String[10];
@@ -539,6 +636,7 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
         jt.setRowHeight(30);
         jt.setBackground(Color.LIGHT_GRAY);
         jt.setForeground(Color.BLACK);
+        jt.setGridColor(Color.WHITE);
         
         pn.add(ShipCount);
         pn.add(lb);
@@ -547,7 +645,8 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
         pn.add(lbt2);
         pn.add(t2);
         pn.add(lbt4);
-        pn.add(t4);
+        pn.add(dirRight);
+        pn.add(dirDown);
         pn.add(jt); 
         pn.add(submit);
         
@@ -595,9 +694,5 @@ public class MenuInterface extends JFrame implements java.awt.event.ActionListen
 	
 	}
    
-  public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-    	new MenuInterface();
-    	Backgroundmusic b = new Backgroundmusic();
-    	b.sound();
-	}
+ 
 }
